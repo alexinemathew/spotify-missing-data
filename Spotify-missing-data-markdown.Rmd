@@ -1,9 +1,10 @@
 ---
 title: 'Missing Data: Final Project'
-author: Alexine Mathew
-date: 3/12/2022
+author: "Alexine Mathew"
+date: "3/12/2022"
 output:
-  pdf_document
+  html_document:
+    df_print: paged
 geometry: margin=0.25in
 ---
 
@@ -44,6 +45,10 @@ This dataset is completely observed with 1,545 observations, so I will have to m
 * **DV:** Number.of.Times.Charted
 
 **Research question:** Do song popularity, tempo, number of artist followers, guest features, and song duration have an influence on the number of times that a song is charted? In other words, we are looking to estimate how many times a song will be charted (Number.of.Times.Charted) based on the following five factors: popularity, tempo, number of artists followers, guest features, and duration. 
+```{r}
+getwd()
+```
+
 ```{r}
 # original dataset - no missingness
 spotify <- read.csv("spotify.csv")
