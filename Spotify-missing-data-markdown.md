@@ -10,36 +10,6 @@ geometry: margin=0.25in
 
 
 
-### 1. Intro 
-#### Dataset: 
-The original dataset is called "Spotify Top 200 Charts (2020-2021)" and can be found [$\text{\underline{here}}$](https://www.kaggle.com/sashankpillai/spotify-top-200-charts-20202021). 
-
-The dataset include all the songs that have been on the Top 200 Weekly (Global) charts of Spotify in 2020 & 2021.
-I have subset the original dataset to only include the following variables: 
-
-* **Number of Times Charted:** The number of times that the song has been on in the Spotify Top 200 Weekly Global Charts in 2020 & 2021.
-* **Artist Followers:** The number of followers the main artist has on Spotify.
-* **Popularity:** The popularity of the track. The value will be between 0 and 100, with 100 being the most popular.
-* **Tempo:** The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.
-* **Duration:** The duration of the song in milliseconds.
-* **Feature:** This is a column that I created based on whether on not there are multiple artists (aka guest features) on the track. This is a binary value (coding is 1 if there are guest features, 0 if none).
-
-This dataset is completely observed with 1,545 observations, so I will have to manually create missingness. 
-
-#### Model  
-* **Model:** Linear regression 
-* **IV:** Popularity, Tempo, Artist.Followers, Feature, Duration.ms
-* **DV:** Number.of.Times.Charted
-
-**Research question:** Do song popularity, tempo, number of artist followers, guest features, and song duration have an influence on the number of times that a song is charted? In other words, we are looking to estimate how many times a song will be charted (Number.of.Times.Charted) based on the following five factors: popularity, tempo, number of artists followers, guest features, and duration. 
-
-```r
-getwd()
-```
-
-```
-## [1] "/Users/alexinemathew/Desktop/spotify-missing-data"
-```
 
 
 ```r
@@ -154,7 +124,7 @@ hist <- data.frame(spotify.miss$Number.of.Times.Charted, spotify.miss$Popularity
 Hmisc::hist.data.frame(hist) # obvious skews for Number.of.Times.Charted and Artist.Followers
 ```
 
-![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 ```r
 # boxplot for categorical variable
@@ -163,7 +133,7 @@ boxplot(Number.of.Times.Charted~Feature,data=spotify.miss,
    xlab="Feature", ylab="Number.of.Times.Charted",col=c("orange" , "seagreen"))  
 ```
 
-![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-4-2.png)<!-- -->
+![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-3-2.png)<!-- -->
 
 ```r
 # % missing per variable
@@ -373,7 +343,7 @@ points(density(spotify.imputed$Number.of.Times.Charted),
        col = "red")
 ```
 
-![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
 
 ```r
@@ -661,7 +631,7 @@ points(density(spotify.random$Number.of.Times.Charted),
        col = "red")
 ```
 
-![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 ```r
 # only numerical variables 
@@ -927,7 +897,7 @@ points(density(spotify.hotdeck$Artist.Followers),
        col = "red")
 ```
 
-![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
 
 The next imputation method that was used was hotdecking, which uses information that is available in the data (within other variables) to “fill in”
 information that is missing for a given predictor. Using hotdecking, the average percent change in coefficients was 149.46%, which was significantly higher than prior methods. It seem that the main issue is the Artist.Followers coefficient, which increased by > 500%. SEs decreased for all variables, with an overall average decrease of 3.35%.\
@@ -1205,7 +1175,7 @@ summary(mdf)
 image(mdf)
 ```
 
-![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
+![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
 
 ```r
 hist(mdf) # Number.of.Times.Charted and Artist.Followers skewed, Popularity has outliers that are negative 
@@ -1227,7 +1197,7 @@ levels(mdf@patterns)
 ## [5] "Popularity"              "Artist.Followers"
 ```
 
-![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-21-2.png)<!-- -->
+![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-20-2.png)<!-- -->
 
 
 ```r
@@ -1336,7 +1306,7 @@ lines(mean_Duration.ms[,3], col= 3)
 lines(mean_Duration.ms [,4], col= 4)
 ```
 
-![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-25-1.png)<!-- -->
+![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
 
 Convergence looks good for all variables so I will not continue with more imputations. 
 
@@ -1365,7 +1335,7 @@ R-hats are ~1 for most variables so I will not make further changes to the imput
 plot(imputations)
 ```
 
-![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-27-1.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-27-2.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-27-3.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-27-4.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-27-5.png)<!-- -->
+![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-26-1.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-26-2.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-26-3.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-26-4.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-26-5.png)<!-- -->
 
 
 ```r
@@ -1373,7 +1343,7 @@ plot(imputations)
 hist(imputations)
 ```
 
-![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-28-1.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-28-2.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-28-3.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-28-4.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-28-5.png)<!-- -->
+![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-27-1.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-27-2.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-27-3.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-27-4.png)<!-- -->![](Spotify-missing-data-markdown_files/figure-html/unnamed-chunk-27-5.png)<!-- -->
 
 
 ```r
