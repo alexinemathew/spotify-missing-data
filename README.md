@@ -3,6 +3,7 @@ The objective of this project is to understand the implications of missing data 
 
 **Techniques used:** mean/mode imputation, random imputation, hotdecking, regression imputation (with and without noise), multiple imputation, kNN imputation
 
+**Language:** R
 
 ## Dataset
 The original dataset is called “Spotify Top 200 Charts (2020-2021)” and can be found on Kaggle [here](https://www.kaggle.com/datasets/sashankpillai/spotify-top-200-charts-20202021).
