@@ -1,5 +1,4 @@
 ---
-title: 'Missing Data: Final Project'
 author: "Alexine Mathew"
 date: "3/12/2022"
 output:
